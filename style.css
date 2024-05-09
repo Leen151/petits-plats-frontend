@@ -97,10 +97,33 @@ header h1{
 
 /* galerie */
 .gallery-recipes{
+    padding: 20px 50px ;
     display: grid;
+    column-gap: 20px;
+    row-gap: 30px;
     grid-template-columns: repeat(3, 1fr);
 }
-/* recettes card*/
 
+.recipe{
+    border-radius: 10px;
+}
+
+
+/* recettes card*/
+.card-img-top{
+    object-fit: cover;
+}
+
+.ingredients-list{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.recipe-description{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 5; /* Remplacez 3 par le nombre maximum de lignes souhaité */
+}
 
 
