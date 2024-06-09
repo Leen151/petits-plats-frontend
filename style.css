@@ -19,8 +19,7 @@ body{
 }
 
 header{
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.30) 0%, rgba(0, 0, 0, 0.30) 100%), url("assets/banniere.png"), lightgray 50% / cover no-repeat;
-    /*background: center / cover no-repeat url("assets/banniere.png");*/
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.30) 0%, rgba(0, 0, 0, 0.30) 100%), url("assets/banniere.webp"), lightgray 50% / cover no-repeat;
     height: 670px;
     display: flex;
     flex-direction: column;
