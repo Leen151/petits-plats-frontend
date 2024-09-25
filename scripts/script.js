@@ -28,10 +28,25 @@ async function main() {
 
 	displayRecipes(recipesData);
 
-	const sectionGallery = document.querySelector(".gallery-recipes")
 
-	recipesData.forEach(recipe => {
-		sectionGallery.appendChild(recipeCard(recipe));
+	//////// Les events /////////
+	/////////////////////////////
+
+	inputSearch.addEventListener('input', () => {
+		const keywordInput = inputSearch.value.toLowerCase();
+		//console.log(keywordInput)
+
+		if (keywordInput.length > 2) {
+			const filteredRecipes = searchRecipesByKeyword(keywordInput, recipesData);
+			//recipesData = filteredRecipes;
+			displayRecipes(filteredRecipes);
+		}
+		//si on ne met pas le else, quand on eface le champs de saisie, la liste de recette ne se réactualise pas (pour moins de 3 caractères)
+		else{			
+			displayRecipes(recipesData);
+		}
+	});	
+
 	//ouverture des liste de filtres
 	chevronIcons.forEach(chevron => {
 		chevron.addEventListener("click", () => {
@@ -87,6 +102,7 @@ async function main() {
 			})
 		});
 	}
+
 
 }
 main();
