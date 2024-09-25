@@ -139,12 +139,27 @@ header h1{
 }
 
 .tag{
-    width: 195px;
+    width: 200px;
     padding: 16px;
     border-radius: 10px;
     background-color: var(--white);
-    max-height: 315px;
-    overflow: hidden;
+    height: fit-content;
+}
+
+.collapse{
+    height: auto;
+}
+
+.list-filters{
+    max-height: 200px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    scrollbar-width: none;
+}
+
+.list-filters::-webkit-scrollbar {
+    display: none;
 }
 
 .tag-title{
@@ -164,6 +179,27 @@ header h1{
     font-size: 21px;
 }
 
+.zone-input{
+    position: relative;
+}
+
+.zone-input input{
+    max-width: 168px;
+    margin: 10px 0;
+}
+
+.zone-input .cross{
+    position: absolute;
+    top: 17px;
+    right: 30px;    
+    color: var(--grey);
+}
+
+.zone-input svg{
+    position: absolute;
+    top: 18px;
+    right: 10px;
+}
 
 /*tag selected*/
 .tag-selected{
