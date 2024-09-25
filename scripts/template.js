@@ -28,19 +28,18 @@ function recipeCard(recipe) {
 
 	<div class="card-body">
 		<div class="text-recipe-container">
-			<h2>${recipe.name}</h2>
+			<h2 class="recipe-title">${recipe.name}</h2>
 			<div class="recipe-description">
-				<h3>recette</h3>
+				<h3>Recette</h3>
 				<p>${recipe.description}</p>
 			</div>
 			<div class="recipe-ingredients">
-				<h3>ingredients</h3>		
+				<h3>Ingrédients</h3>		
 				${ingredientsList.outerHTML}
-			</div>
-			
-		</div>	
+			</div>			
+		</div>
 
-		<p>${recipe.time}min</p>
+		<div class="time">${recipe.time}min</div>
 	</div>
 	`;
 
