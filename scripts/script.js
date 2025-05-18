@@ -28,26 +28,20 @@ async function main() {
 
 	displayRecipes(recipesData);
 
+	
+	//////// Les events /////////
+	/////////////////////////////
+	
 	// Event listener pour l'icône cross de la barre de recherche
 	cross.addEventListener('click', () => {
 		inputSearch.value = ''; // Réinitialise le champ de recherche
 		cross.classList.remove('show'); // Cache l'icône cross
 		displayRecipes(recipesData); // Réaffiche toutes les recettes
 	});
-
-	//////// Les events /////////
-	/////////////////////////////
-
+	
 	inputSearch.addEventListener('input', () => {
 		const keywordInput = inputSearch.value.toLowerCase();
-		//console.log(keywordInput)
-
-		// Gestion de l'affichage de l'icône cross
-		if (keywordInput.length > 0) {
-			cross.classList.add('show');
-		} else {
-			cross.classList.remove('show');
-		}
+		cross.classList.toggle('show', keywordInput.length > 0);
 
 		if (keywordInput.length > 2) {
 			const filteredRecipes = searchRecipesByKeyword(keywordInput, recipesData);
