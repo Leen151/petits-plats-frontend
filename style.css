@@ -65,14 +65,14 @@ header h1{
     line-height: normal;
 }
 
-.container input::placeholder{
+.form-search input::placeholder{
     color: var(--grey);
     line-height: normal;
     opacity: 100%;
 }
 
 /* barre de recherche */
-.container {
+.form-search {
     width: 66%;
     height: 100%;
     position: relative;
