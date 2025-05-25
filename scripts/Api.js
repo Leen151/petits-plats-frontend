@@ -7,7 +7,7 @@ async function getData() {
 
 function getIngredients(recipe) {
 	//flatMap permet de faire un seul tableau avec le contenu des sous-tableau d'ingrédients
-	const allIngredients = recipe.flatMap(recipe => recipe.ingredients.map(ing => ing.ingredient));
+	const allIngredients = recipe.flatMap(recipe => recipe.ingredients.map(ing => ing.ingredient.toLowerCase()));
 	//Set permet d'éliminer les doublons
 	//les ... transforme le Set en array
 	const uniqueIngredients = [...new Set(allIngredients)];
@@ -15,17 +15,18 @@ function getIngredients(recipe) {
 }
 
 function getAppliance(recipe) {
-	const allAppliances = recipe.map(recipe => recipe.appliance);
+	const allAppliances = recipe.map(recipe => recipe.appliance.toLowerCase());
 	const uniqueAppliances = [...new Set(allAppliances)];
 
 	return uniqueAppliances;
 }
 
 function getUstensils(recipe) {
-	const allUstensils = recipe.flatMap(recipe => recipe.ustensils);
-	const uniqueUstensils = [...new Set(allUstensils)];
-
-	return uniqueUstensils;
+    const allUstensils = recipe.flatMap(recipe => 
+        recipe.ustensils.map(ustensil => ustensil.toLowerCase())
+    );
+    const uniqueUstensils = [...new Set(allUstensils)];
+    return uniqueUstensils;
 }
 
 export {getData, getIngredients, getAppliance, getUstensils}
