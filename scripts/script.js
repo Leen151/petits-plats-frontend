@@ -1,15 +1,13 @@
-import {recipeCard} from "./template.js";
-import {getData, getIngredients, getAppliance, getUstensils} from "./Api.js";
-import {searchRecipesByKeyword} from "./search.js"
+import { recipeCard, createTagSelect } from "./template.js";
+import { getData, getIngredients, getAppliance, getUstensils } from "./Api.js";
+import { searchRecipes } from "./search.js"
 
 async function main() {
 	const sectionGallery = document.querySelector(".gallery-recipes");
-	const listIngredients = document.querySelector(".list-ingredients");
-	const listAppliances = document.querySelector(".list-appliances");
-	const listUstensils = document.querySelector(".list-ustensils");
+
 	const inputSearch = document.querySelector(".searchbar");
-	const chevronIcons = document.querySelectorAll(".icone-chevron");
 	const cross = document.querySelector(".cross");
+	const tagSelectContainer = document.querySelector('.tag-search');
 
 	let selectedIngredients = [];
 	let selectedAppliances = [];
@@ -20,18 +18,37 @@ async function main() {
 	const appliances = await getAppliance(recipesData);
 	const ustensils = await getUstensils(recipesData);
 
+	const tags = [
+		{ type: "ingredients", titre: "Ingrédients", values: ingredients },
+		{ type: "appliance", titre: "Appareils", values: appliances },
+		{ type: "ustensils", titre: "Ustensiles", values: ustensils }
+	];
+
+	tags.forEach(tag => {
+		const tagComponent = createTagSelect(tag.type, tag.titre, tag.values);
+		tagSelectContainer.appendChild(tagComponent);
+	});
+
+	// Attendre un court instant pour que le DOM soit mis à jour
+	//await new Promise(resolve => setTimeout(resolve, 1000));
+
+
 	let recipe = recipesData;
 
-	displayFilters(ingredients, listIngredients, "ingredient");
-	displayFilters(appliances, listAppliances, "appliance");
-	displayFilters(ustensils, listUstensils, "ustensil");
+	// Récupérer les éléments de liste après leur création
+	const listIngredients = document.querySelector(".list-ingredients");
+	const listAppliances = document.querySelector(".list-appliances");
+	const listUstensils = document.querySelector(".list-ustensils");
+
+
+	const chevronIcons = document.querySelectorAll(".icone-chevron");
 
 	displayRecipes(recipesData);
 
-	
+
 	//////// Les events /////////
 	/////////////////////////////
-	
+
 	// Event listener pour l'icône cross de la barre de recherche
 	cross.addEventListener('click', async () => {
 		inputSearch.value = ''; // Réinitialise le champ de recherche
@@ -39,13 +56,13 @@ async function main() {
 		displayRecipes(recipesData); // Réaffiche toutes les recettes
 		await updateFilters(recipesData); // Met à jour les filtres
 	});
-	
+
 	inputSearch.addEventListener('input', async () => {
-		const keywordInput = inputSearch.value.toLowerCase();
+		const keywordInput = inputSearch.value;
 		cross.classList.toggle('show', keywordInput.length > 0);
 
 		if (keywordInput.length > 2) {
-			const filteredRecipes = searchRecipesByKeyword(keywordInput, recipesData);
+			const filteredRecipes = searchRecipes(recipesData, keywordInput, [], [], []);
 			displayRecipes(filteredRecipes);
 			await updateFilters(filteredRecipes);
 		}
