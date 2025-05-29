@@ -6,6 +6,10 @@ async function getData() {
 }
 
 function getIngredients(recipe) {
+	if (!recipe || recipe.length === 0) {
+		return [];
+	}
+
 	//flatMap permet de faire un seul tableau avec le contenu des sous-tableau d'ingrédients
 	const allIngredients = recipe.flatMap(recipe => recipe.ingredients.map(ing => ing.ingredient.toLowerCase()));
 	//Set permet d'éliminer les doublons
@@ -15,6 +19,10 @@ function getIngredients(recipe) {
 }
 
 function getAppliance(recipe) {
+	if (!recipe || recipe.length === 0) {
+		return [];
+	}
+
 	const allAppliances = recipe.map(recipe => recipe.appliance.toLowerCase());
 	const uniqueAppliances = [...new Set(allAppliances)];
 
@@ -22,14 +30,19 @@ function getAppliance(recipe) {
 }
 
 function getUstensils(recipe) {
-    const allUstensils = recipe.flatMap(recipe => 
-        recipe.ustensils.map(ustensil => ustensil.toLowerCase())
-    );
-    const uniqueUstensils = [...new Set(allUstensils)];
-    return uniqueUstensils;
+	if (!recipe || recipe.length === 0) {
+		return [];
+	}
+
+	const allUstensils = recipe.flatMap(recipe =>
+		recipe.ustensils.map(ustensil => ustensil.toLowerCase())
+	);
+	const uniqueUstensils = [...new Set(allUstensils)];
+
+	return uniqueUstensils;
 }
 
-export {getData, getIngredients, getAppliance, getUstensils}
+export { getData, getIngredients, getAppliance, getUstensils }
 
 
 

@@ -29,10 +29,6 @@ async function main() {
 		tagSelectContainer.appendChild(tagComponent);
 	});
 
-	// Attendre un court instant pour que le DOM soit mis à jour
-	//await new Promise(resolve => setTimeout(resolve, 1000));
-
-
 	let recipe = recipesData;
 
 	// Récupérer les éléments de liste après leur création
@@ -124,18 +120,16 @@ async function main() {
 	//ouverture des liste de filtres
 	chevronIcons.forEach(chevron => {
 		chevron.addEventListener("click", () => {
-				// Trouver la div englobant le filtre concerné par le clic
-				const containerDiv = chevron.closest(".tag");
-				// on cible la div "collapse" dans cette div englobante
-				const collapseDiv = containerDiv.querySelector(".collapse");
+			// Trouver la div englobant le filtre concerné par le clic
+			const containerDiv = chevron.closest(".tag");
+			// on cible la div "collapse" dans cette div englobante
+			const collapseDiv = containerDiv.querySelector(".collapse");
 
-				// Ajouter ou supprimer la class "show" pour afficher ou masquer la liste
-				collapseDiv.classList.toggle("show");
-				chevron.classList.toggle("to-close");
+			// Ajouter ou supprimer la class "show" pour afficher ou masquer la liste
+			collapseDiv.classList.toggle("show");
+			chevron.classList.toggle("to-close");
 		});
 	});
-
-
 
 
 	/////// Partie fonctions ////////
@@ -144,6 +138,10 @@ async function main() {
 	function displayRecipes(recipes) {
 		//Efface la galerie de recette prééxistante
 		sectionGallery.innerHTML = "";
+
+		//Compteur de recettes
+		const nbRecipes = document.querySelector('.nb-recipes');
+		nbRecipes.textContent = `${recipes.length} recette${recipes.length > 1 ? 's' : ''}`;
 
 		// Si aucune recette n'est trouvée
 		if (recipes.length === 0) {
@@ -167,11 +165,14 @@ async function main() {
 		});
 	}
 
-	function displayFilters(filter, domElement, filterType){
+	function displayFilters(items, domElement, filterType) {
+		//console.log(items)
+		//console.log(domElement)
+		//console.log(filterType)
 		//on réinitialise
 		domElement.innerHTML = "";
 		//on crée la liste
-		filter.forEach(object => {
+		items.forEach(object => {
 			const li = document.createElement('li');
 			li.textContent = object;
 			domElement.appendChild(li);
@@ -192,7 +193,7 @@ async function main() {
 		filters.forEach(filter => {
 			filter.addEventListener("click", (e) => {
 				const filterValue = filter.textContent;
-				
+
 				if (filter.classList.contains("ingredient-tag")) {
 					addFilter(selectedIngredients, filterValue);
 				} else if (filter.classList.contains("appliance-tag")) {
@@ -249,4 +250,8 @@ async function main() {
 	}
 
 }
-main();
+
+
+document.addEventListener('DOMContentLoaded', () => {
+	main();
+});

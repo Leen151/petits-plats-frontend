@@ -1,4 +1,4 @@
-//on donne une valeur par défaut à keyword pour éviter les erreurs
+//on donne une valeur par défaut aux paramètres pour éviter les erreurs
 function searchRecipes(recipes, keyword = "", selectedIngredients = [], selectedAppliances = [], selectedUstensils = []) {
   // Étape 1 : filtrage par mot-clé
   const lowerKeyword = keyword.toLowerCase().trim();
