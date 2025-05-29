@@ -99,15 +99,19 @@ async function main() {
 
 		// Si aucune recette n'est trouvée
 		if (recipes.length === 0) {
+			sectionGallery.classList.add('empty');
 			const noResultMessage = document.createElement('div');
 			noResultMessage.classList.add('no-result-message');
 			noResultMessage.innerHTML = `
-            <p>Aucune recette ne contient '${inputSearch.value}' </p>
+            <p>Aucune recette ne contient « ${inputSearch.value} » </p>
             <p>Vous pouvez chercher « tarte aux pommes », « poisson », etc.</p>
         `;
 			sectionGallery.appendChild(noResultMessage);
 			return;
 		}
+
+		// Retirer la classe empty si elle existe
+		sectionGallery.classList.remove('empty');
 
 		//sinon créer la nouvelle galerie
 		recipes.forEach(recipe => {
