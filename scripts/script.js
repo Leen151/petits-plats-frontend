@@ -96,7 +96,20 @@ async function main() {
 	function displayRecipes(recipes) {
 		//Efface la galerie de recette prééxistante
 		sectionGallery.innerHTML = "";
-		//en créer une nouvelle
+
+		// Si aucune recette n'est trouvée
+		if (recipes.length === 0) {
+			const noResultMessage = document.createElement('div');
+			noResultMessage.classList.add('no-result-message');
+			noResultMessage.innerHTML = `
+            <p>Aucune recette ne contient '${inputSearch.value}' </p>
+            <p>Vous pouvez chercher « tarte aux pommes », « poisson », etc.</p>
+        `;
+			sectionGallery.appendChild(noResultMessage);
+			return;
+		}
+
+		//sinon créer la nouvelle galerie
 		recipes.forEach(recipe => {
 			sectionGallery.appendChild(recipeCard(recipe));
 		});

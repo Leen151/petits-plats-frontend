@@ -226,15 +226,26 @@ header h1{
 
 
 /* galerie */
-.gallery-recipes{
-    margin: 40px 0 ;
+.gallery-recipes:not(.empty) {
+    margin: 40px 0;
     display: grid;
     column-gap: 48px;
     row-gap: 66px;
     grid-template-columns: repeat(3, 1fr);
 }
 
-.recipe{
+.gallery-recipes.empty {
+    background-color: lightgray;
+}
+
+.no-result-message {
+    margin: 15px;
+    padding: 15px 10px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.recipe {
     border-radius: 10px;
 }
 
