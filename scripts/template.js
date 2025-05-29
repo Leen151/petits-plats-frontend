@@ -56,8 +56,8 @@ function createTagSelect(type, title, filterValues = []) {
 		<div class="tag-title">${title} <i class="fa-solid fa-chevron-down icone-chevron"></i></div>
 		<div class="collapse">
 				<div class="zone-input">
-						<input type="text"/> 
-						<i class="fa-solid fa-xmark cross"></i> 
+						<input type="text"/>
+						<i class="fa-solid fa-xmark cross-list cross"></i> 
 						<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<circle cx="5" cy="5" r="4.75" stroke="#7A7A7A" stroke-width="0.6"/>
 								<line x1="9.17678" y1="9.32322" x2="13.6768" y2="13.8232" stroke="#7A7A7A" stroke-width="0.6"/>

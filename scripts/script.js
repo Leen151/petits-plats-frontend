@@ -8,6 +8,7 @@ async function main() {
 	const inputSearch = document.querySelector(".searchbar");
 	const cross = document.querySelector(".cross");
 	const tagSelectContainer = document.querySelector('.tag-search');
+	const formSearch = document.querySelector('.form-search');
 
 	let selectedIngredients = [];
 	let selectedAppliances = [];
@@ -75,6 +76,12 @@ async function main() {
 			displayRecipes(recipesData);
 			await updateFilters(recipesData);
 		}
+	});
+
+	// simule la soumission de l'input de recherche
+	formSearch.addEventListener('submit', (e) => {
+		e.preventDefault();
+		inputSearch.blur();
 	});
 
 	// Gestion de la recherche dans les listes de filtres
@@ -185,13 +192,13 @@ async function main() {
 	function createSelectedTag(value, type) {
 		const tagSelected = document.querySelector('.tag-selected ul');
 		const li = document.createElement('li');
-		
+
 		// ajout du texte du tag
 		li.textContent = value;
-		
+
 		// icône de croix
 		const cross = document.createElement('i');
-		cross.classList.add('fa-solid', 'fa-xmark');
+		cross.classList.add('fa-solid', 'fa-xmark', 'cross-tag');
 		li.appendChild(cross);
 
 		// ajout de la classe correspondant au type de tag (utile pour la suppression)
@@ -232,25 +239,39 @@ async function main() {
 
 	//créer une liste d'un filtre
 	function displayFilters(items, domElement, filterType) {
-		//console.log(items)
-		//console.log(domElement)
-		//console.log(filterType)
 		//on réinitialise
 		domElement.innerHTML = "";
+		
+		// correspondance entre type dela liste et le tableau et classe
+		const typeInfos = {
+			ingredient: {
+				array: selectedIngredients,
+				tagClass: "ingredient-tag"
+			},
+			appliance: {
+				array: selectedAppliances,
+				tagClass: "appliance-tag"
+			},
+			ustensil: {
+				array: selectedUstensils,
+				tagClass: "ustensil-tag"
+			}
+		};
+
 		//on crée la liste
-		items.forEach(object => {
+		items.forEach(item => {
 			const li = document.createElement('li');
-			li.textContent = object;
+			li.textContent = item;
 			domElement.appendChild(li);
 			li.classList.add("filter");
 
-			if (filterType === "ingredient") {
-				li.classList.add("ingredient-tag");
-			} else if (filterType === "appliance") {
-				li.classList.add("appliance-tag");
-			} else if (filterType === "ustensil") {
-				li.classList.add("ustensil-tag");
+			// on ajoute la classe yellow si l'élément est en tag-selected (donc dans un des tableaux)
+			if (typeInfos[filterType].array.includes(item)) {
+				li.classList.add("yellow");
 			}
+
+			// Ajout de la classe correspondant au type
+			li.classList.add(typeInfos[filterType].tagClass);
 		});
 	}
 
@@ -275,6 +296,7 @@ async function main() {
 		const filterValue = filter.textContent;
 
 		// Ajouter le filtre au tableau correspondant
+		// et créer un tag-selected
 		if (type === 'ingredient' && !selectedIngredients.includes(filterValue)) {
 			selectedIngredients.push(filterValue);
 			createSelectedTag(filterValue, 'ingredient');

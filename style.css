@@ -91,7 +91,7 @@ header h1 {
     padding: 1rem 2.2rem;
 }
 
-.button {
+.icon-search {
     position: absolute;
     top: 0.6rem;
     right: 0.6rem;
@@ -100,13 +100,16 @@ header h1 {
     border: none;
     border-radius: 10px;
     background-color: var(--black);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .searchbar::placeholder {
     opacity: 0.3;
 }
 
-.icone-croix {
+.cross-search {
     position: absolute;
     font-size: 1.6rem;
     color: var(--grey);
@@ -201,6 +204,11 @@ header h1 {
 
 .filter{
     cursor: pointer;
+}
+
+.yellow{
+    background-color: var(--yellow);
+    padding: 5px;
 }
 
 /*tag selected*/
