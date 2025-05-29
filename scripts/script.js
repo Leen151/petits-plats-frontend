@@ -20,7 +20,7 @@ async function main() {
 
 	const tags = [
 		{ type: "ingredients", titre: "Ingrédients", values: ingredients },
-		{ type: "appliance", titre: "Appareils", values: appliances },
+		{ type: "appliances", titre: "Appareils", values: appliances },
 		{ type: "ustensils", titre: "Ustensiles", values: ustensils }
 	];
 
