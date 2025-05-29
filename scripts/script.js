@@ -47,7 +47,7 @@ async function main() {
 	cross.addEventListener('click', async () => {
 		inputSearch.value = ''; // Réinitialise le champ de recherche
 		cross.classList.remove('show'); // Cache l'icône cross
-		
+
 		// Filtrer les recettes en gardant les tags sélectionnés si il y en a
 		const filteredRecipes = searchRecipes(
 			recipesData,
@@ -56,14 +56,14 @@ async function main() {
 			selectedAppliances,
 			selectedUstensils
 		);
-		
+
 		displayRecipes(filteredRecipes); // Affiche les recettes filtrées
 		await updateFilters(filteredRecipes); // Met à jour les filtres
 	});
 
 	//event de la recherche par mot clé
 	inputSearch.addEventListener('input', async () => {
-		const keywordInput = inputSearch.value;
+		const keywordInput = escapeHtml(inputSearch.value);
 		cross.classList.toggle('show', keywordInput.length > 0);
 
 		if (keywordInput.length > 2) {
@@ -90,10 +90,10 @@ async function main() {
 		const cross = input.nextElementSibling; // La croix est l'élément suivant l'input
 
 		input.addEventListener('input', async (e) => {
-			const searchValue = e.target.value.toLowerCase();
+			const searchValue = escapeHtml(e.target.value.toLowerCase());
 			const filterList = e.target.closest('.tag').querySelector('.list');
 			const filterType = e.target.closest('.tag').classList.contains('ingredients') ? 'ingredient' :
-							  e.target.closest('.tag').classList.contains('appliances') ? 'appliance' : 'ustensil';
+				e.target.closest('.tag').classList.contains('appliances') ? 'appliance' : 'ustensil';
 
 			// Afficher/masquer la croix en fonction de la présence de texte
 			cross.classList.toggle('show', searchValue.length > 0);
@@ -112,12 +112,12 @@ async function main() {
 		cross.addEventListener('click', async () => {
 			input.value = ''; // Vider le champ
 			cross.classList.remove('show'); // Masquer la croix
-			
+
 			// Réinitialiser la liste avec tous les éléments
 			const filterList = input.closest('.tag').querySelector('.list');
 			const filterType = input.closest('.tag').classList.contains('ingredients') ? 'ingredient' :
-							  input.closest('.tag').classList.contains('appliances') ? 'appliance' : 'ustensil';
-			
+				input.closest('.tag').classList.contains('appliances') ? 'appliance' : 'ustensil';
+
 			// Récupérer les valeurs originales en fonction du type de filtre
 			let originalValues;
 			if (filterType === 'ingredient') {
@@ -159,7 +159,7 @@ async function main() {
 
 	//event de clic sur la croix d'un tag sélectionné
 	document.addEventListener('click', (e) => {
-		if (e.target.classList.contains('fa-xmark')) {
+		if (e.target.classList.contains('cross-tag')) {
 			const tag = e.target.closest('li');
 			const value = tag.textContent.trim();
 			const type = tag.classList.contains('ingredient-tag') ? 'ingredient' :
@@ -187,6 +187,16 @@ async function main() {
 
 	/////// Partie fonctions ////////
 	/////////////////////////////////
+
+	// Fonction pour échapper le HTML et qu'il ne soit pas interprété
+	function escapeHtml(unsafe) {
+		return unsafe
+			.replace(/&/g, "&amp;")
+			.replace(/</g, "&lt;")
+			.replace(/>/g, "&gt;")
+			.replace(/"/g, "&quot;")
+			.replace(/'/g, "&#039;");
+	}
 
 	//créer un tag-selected
 	function createSelectedTag(value, type) {
