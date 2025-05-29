@@ -26,14 +26,13 @@ function searchRecipes(recipes, keyword = "", selectedIngredients = [], selected
 
   //ici on repart du résultat du filtrage par mot clé
   const filteredByTags = filteredByKeyword.filter(recipe => {
-    //on initialise les match à false 
-    //(si on initialise à true, la recette resortirai si un des 3 tableau est vide sans qu'il y ai correspondance)
-    let matchIngredients = false;
-    let matchAppliances = false;
-    let matchUstensils = false;
+    //on initialise les match à true car on veut que tous les critères soient respectés
+    let matchIngredients = true;
+    let matchAppliances = true;
+    let matchUstensils = true;
 
     if (selectedIngredients.length > 0) {
-      matchIngredients = selectedIngredients.some(ingredient =>
+      matchIngredients = selectedIngredients.every(ingredient =>
         recipe.ingredients.some(ing =>
           ing.ingredient.toLowerCase().includes(ingredient.toLowerCase())
         )
@@ -41,22 +40,21 @@ function searchRecipes(recipes, keyword = "", selectedIngredients = [], selected
     }
 
     if (selectedAppliances.length > 0) {
-      matchAppliances = selectedAppliances.some(appliance =>
+      matchAppliances = selectedAppliances.every(appliance =>
         recipe.appliance.toLowerCase().includes(appliance.toLowerCase())
       );
     }
 
     if (selectedUstensils.length > 0) {
-      matchUstensils = selectedUstensils.some(ustensil =>
+      matchUstensils = selectedUstensils.every(ustensil =>
         recipe.ustensils.some(ust =>
           ust.toLowerCase().includes(ustensil.toLowerCase())
         )
       );
     }
 
-    //Si au moins 1 des cas est vrai, on garde la recette sur laquelle on intère 
-    //(return true dans le filter)
-    return matchIngredients || matchAppliances || matchUstensils;
+    //On garde la recette seulement si TOUS les critères sont respectés
+    return matchIngredients && matchAppliances && matchUstensils;
   });
 
   return filteredByTags;
