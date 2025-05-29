@@ -67,11 +67,59 @@ async function main() {
 			await updateFilters(filteredRecipes);
 		}
 		//si on ne met pas le else, quand on eface le champs de saisie, la liste de recette ne se réactualise pas (pour moins de 3 caractères)
-		else{			
+		else {
 			displayRecipes(recipesData);
 			await updateFilters(recipesData);
 		}
-	});	
+	});
+
+	// Gestion de la recherche dans les listes de filtres
+	const searchInputs = document.querySelectorAll('.tag input[type="text"]');
+	searchInputs.forEach(input => {
+		const cross = input.nextElementSibling; // La croix est l'élément suivant l'input
+
+		input.addEventListener('input', async (e) => {
+			const searchValue = e.target.value.toLowerCase();
+			const filterList = e.target.closest('.tag').querySelector('.list');
+			const filterType = e.target.closest('.tag').classList.contains('ingredients') ? 'ingredient' :
+							  e.target.closest('.tag').classList.contains('appliances') ? 'appliance' : 'ustensil';
+
+			// Afficher/masquer la croix en fonction de la présence de texte
+			cross.classList.toggle('show', searchValue.length > 0);
+
+			// Filtrer les éléments en fonction de la recherche
+			const filteredItems = filterList.querySelectorAll('li');
+			const filteredValues = Array.from(filteredItems)
+				.map(item => item.textContent)
+				.filter(text => text.toLowerCase().includes(searchValue));
+
+			// Mettre à jour l'affichage avec les éléments filtrés
+			displayFilters(filteredValues, filterList, filterType);
+		});
+
+		// event clic sur la croix
+		cross.addEventListener('click', async () => {
+			input.value = ''; // Vider le champ
+			cross.classList.remove('show'); // Masquer la croix
+			
+			// Réinitialiser la liste avec tous les éléments
+			const filterList = input.closest('.tag').querySelector('.list');
+			const filterType = input.closest('.tag').classList.contains('ingredients') ? 'ingredient' :
+							  input.closest('.tag').classList.contains('appliances') ? 'appliance' : 'ustensil';
+			
+			// Récupérer les valeurs originales en fonction du type de filtre
+			let originalValues;
+			if (filterType === 'ingredient') {
+				originalValues = await getIngredients(recipesData);
+			} else if (filterType === 'appliance') {
+				originalValues = await getAppliance(recipesData);
+			} else {
+				originalValues = await getUstensils(recipesData);
+			}
+
+			displayFilters(originalValues, filterList, filterType);
+		});
+	});
 
 	//ouverture des liste de filtres
 	chevronIcons.forEach(chevron => {
