@@ -102,10 +102,6 @@ header h1 {
     background-color: var(--black);
 }
 
-.button:hover {
-    cursor: pointer;
-}
-
 .searchbar::placeholder {
     opacity: 0.3;
 }
@@ -117,21 +113,13 @@ header h1 {
     right: 5.3rem;
     top: 1.4rem;    
     z-index: 3;
+    cursor: pointer;
 }
 
 .show {
     display: block;
 }
 
-.icone-chevron {
-    transform: rotate(0deg);
-    transition: transform 0.3s ease;
-}
-
-.icone-chevron.to-close {
-    transform: rotate(180deg);
-    transition: transform 0.3s ease;
-}
 
 /*filtres*/
 .filters {
@@ -162,7 +150,6 @@ header h1 {
     max-height: 200px;
     overflow-x: hidden;
     overflow-y: scroll;
-
     scrollbar-width: none;
 }
 
@@ -177,14 +164,17 @@ header h1 {
 }
 
 .icone-chevron {
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+    cursor: pointer;
     display: flex;
     align-items: center;
 }
 
-.nb-recipes {
-    color: var(--black);
-    font-family: var(--font2);
-    font-size: 21px;
+.icone-chevron.to-close {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+    cursor: pointer;
 }
 
 .zone-input {
@@ -209,6 +199,10 @@ header h1 {
     right: 10px;
 }
 
+.filter{
+    cursor: pointer;
+}
+
 /*tag selected*/
 .tag-selected {
     padding: 10px 0;
@@ -231,7 +225,11 @@ header h1 {
 }
 
 
-
+.nb-recipes {
+    color: var(--black);
+    font-family: var(--font2);
+    font-size: 21px;
+}
 
 /* galerie */
 .gallery-recipes:not(.empty) {
