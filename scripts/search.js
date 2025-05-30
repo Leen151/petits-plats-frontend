@@ -4,15 +4,89 @@ function searchRecipes(recipes, keyword = "", selectedIngredients = [], selected
 	const lowerKeyword = keyword.toLowerCase().trim();
 	let filteredByKeyword = recipes;
 
-	if (lowerKeyword.length > 0) {
-		filteredByKeyword = filteredByKeyword.filter(recipe =>
-			recipe.name.toLowerCase().includes(lowerKeyword) ||
-			recipe.description.toLowerCase().includes(lowerKeyword) ||
-			recipe.ingredients.some(ing => ing.ingredient.toLowerCase().includes(lowerKeyword))
-		);
+	if (lowerKeyword.length > 2) {
+		let newFilteredRecipes = [];
+		let newIndex = 0;
+		
+		//on boucle sur toutes les recettes
+		for (let i = 0; i < recipes.length; i++) {
+			const recipe = recipes[i];
+			
+			// Vérification de correspondance dans le titre
+			let nameMatch = false;
+			let nameLower = recipe.name.toLowerCase();
+			for (let j = 0; j <= nameLower.length - lowerKeyword.length; j++) {
+				let match = true;
+				for (let k = 0; k < lowerKeyword.length; k++) {
+					if (nameLower[j + k] !== lowerKeyword[k]) {
+						match = false;
+						break; //on sort de la boucle k si pas de correspondance
+					}
+				}
+				if (match) {
+					nameMatch = true;
+					break; //on sort de la boucle j si correspondance
+				}
+			}
+			if (nameMatch) {
+				newFilteredRecipes[newIndex] = recipe;
+				newIndex++;
+				continue;  // on passe à la recette suivante
+			}
+			
+			// Vérification de correspondance dans la description
+			let descriptionMatch = false;
+			let descriptionLower = recipe.description.toLowerCase();
+			for (let j = 0; j <= descriptionLower.length - lowerKeyword.length; j++) {
+				let match = true;
+				for (let k = 0; k < lowerKeyword.length; k++) {
+					if (descriptionLower[j + k] !== lowerKeyword[k]) {
+						match = false;
+						break;
+					}
+				}
+				if (match) {
+					descriptionMatch = true;
+					break;
+				}
+			}
+			if (descriptionMatch) {
+				newFilteredRecipes[newIndex] = recipe;
+				newIndex++;
+				continue;  // On passe directement à la recette suivante
+			}
+			
+			// Vérification de correspondance dans les ingrédients
+			for (let j = 0; j < recipe.ingredients.length; j++) {
+				const ingredient = recipe.ingredients[j];
+				let ingredientMatch = false;
+				let ingredientLower = ingredient.ingredient.toLowerCase();
+				
+				for (let k = 0; k <= ingredientLower.length - lowerKeyword.length; k++) {
+					let match = true;
+					for (let l = 0; l < lowerKeyword.length; l++) {
+						if (ingredientLower[k + l] !== lowerKeyword[l]) {
+							match = false;
+							break;
+						}
+					}
+					if (match) {
+						ingredientMatch = true;
+						break;
+					}
+				}
+				
+				if (ingredientMatch) {
+					newFilteredRecipes[newIndex] = recipe;
+					newIndex++;
+					break;  // On sort de la boucle des ingrédients
+				}
+			}
+		}
+		
+		filteredByKeyword = newFilteredRecipes;
 	}
-
-	// Étape 2 : filtrage par tags    
+	
 	// Si aucun tag selectionné → on retourne le résultat du filtrage par mot clé
 	if (
 		selectedIngredients.length === 0 &&
@@ -22,6 +96,8 @@ function searchRecipes(recipes, keyword = "", selectedIngredients = [], selected
 		return filteredByKeyword; //vaut recipes si il n'y avait pas de mot clé
 	}
 
+
+	// Étape 2 : filtrage par tags
 	//ici on repart du résultat du filtrage par mot clé
 	const filteredByTags = filteredByKeyword.filter(recipe => {
 		//on initialise les match à true car on veut que tous les critères soient respectés
