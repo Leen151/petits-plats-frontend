@@ -217,24 +217,6 @@ async function main() {
 			.replace(/'/g, "&#039;");
 	}
 
-	//créer un tag-selected
-	function createSelectedTag(value, type) {
-		const tagSelected = document.querySelector(".tag-selected ul");
-		const li = document.createElement("li");
-
-		// ajout du texte du tag
-		li.textContent = value;
-
-		// icône de croix
-		const cross = document.createElement("i");
-		cross.classList.add("fa-solid", "fa-xmark", "cross-tag");
-		li.appendChild(cross);
-
-		// ajout de la classe correspondant au type de tag (utile pour la suppression)
-		li.classList.add(`${type}-tag`);
-		tagSelected.appendChild(li);
-	}
-
 	//créer la galerie de recettes
 	function displayRecipes(recipes) {
 		//Efface la galerie de recette prééxistante
