@@ -10,11 +10,43 @@ function getIngredients(recipe) {
 		return [];
 	}
 
-	//flatMap permet de faire un seul tableau avec le contenu des sous-tableau d'ingrédients
-	const allIngredients = recipe.flatMap(recipe => recipe.ingredients.map(ing => ing.ingredient.toLowerCase()));
-	//Set permet d'éliminer les doublons
-	//les ... transforme le Set en array
-	const uniqueIngredients = [...new Set(allIngredients)];
+	// Création d'un tableau pour stocker tous les ingrédients
+	let allIngredients = [];
+	let allIngredientsIndex = 0;
+
+	// Parcourir toutes les recettes
+	for (let i = 0; i < recipe.length; i++) {
+		// Parcourir les ingrédients de chaque recette
+		for (let j = 0; j < recipe[i].ingredients.length; j++) {
+			// Ajouter l'ingrédient en minuscules
+			allIngredients[allIngredientsIndex] = recipe[i].ingredients[j].ingredient.toLowerCase();
+			allIngredientsIndex++;
+		}
+	}
+
+	// Création d'un tableau pour les ingrédients uniques
+	let uniqueIngredients = [];
+	let uniqueIndex = 0;
+
+	// Parcourir tous les ingrédients
+	for (let i = 0; i < allIngredients.length; i++) {
+		let isDuplicate = false;
+
+		// Vérifier si l'ingrédient existe déjà dans uniqueIngredients
+		for (let j = 0; j < uniqueIngredients.length; j++) {
+			if (allIngredients[i] === uniqueIngredients[j]) {
+				isDuplicate = true;
+				break;
+			}
+		}
+
+		// Si ce n'est pas un doublon, l'ajouter
+		if (!isDuplicate) {
+			uniqueIngredients[uniqueIndex] = allIngredients[i];
+			uniqueIndex++;
+		}
+	}
+
 	return uniqueIngredients;
 }
 
@@ -23,8 +55,32 @@ function getAppliance(recipe) {
 		return [];
 	}
 
-	const allAppliances = recipe.map(recipe => recipe.appliance.toLowerCase());
-	const uniqueAppliances = [...new Set(allAppliances)];
+	let allAppliances = [];
+	let allAppliancesIndex = 0;
+
+	for (let i = 0; i < recipe.length; i++) {
+		allAppliances[allAppliancesIndex] = recipe[i].appliance.toLowerCase();
+		allAppliancesIndex++;
+	}
+
+	let uniqueAppliances = [];
+	let uniqueIndex = 0;
+
+	for (let i = 0; i < allAppliances.length; i++) {
+		let isDuplicate = false;
+
+		for (let j = 0; j < uniqueAppliances.length; j++) {
+			if (allAppliances[i] === uniqueAppliances[j]) {
+				isDuplicate = true;
+				break;
+			}
+		}
+
+		if (!isDuplicate) {
+			uniqueAppliances[uniqueIndex] = allAppliances[i];
+			uniqueIndex++;
+		}
+	}
 
 	return uniqueAppliances;
 }
@@ -34,10 +90,34 @@ function getUstensils(recipe) {
 		return [];
 	}
 
-	const allUstensils = recipe.flatMap(recipe =>
-		recipe.ustensils.map(ustensil => ustensil.toLowerCase())
-	);
-	const uniqueUstensils = [...new Set(allUstensils)];
+	let allUstensils = [];
+	let allUstensilsIndex = 0;
+
+	for (let i = 0; i < recipe.length; i++) {
+		for (let j = 0; j < recipe[i].ustensils.length; j++) {
+			allUstensils[allUstensilsIndex] = recipe[i].ustensils[j].toLowerCase();
+			allUstensilsIndex++;
+		}
+	}
+
+	let uniqueUstensils = [];
+	let uniqueIndex = 0;
+
+	for (let i = 0; i < allUstensils.length; i++) {
+		let isDuplicate = false;
+
+		for (let j = 0; j < uniqueUstensils.length; j++) {
+			if (allUstensils[i] === uniqueUstensils[j]) {
+				isDuplicate = true;
+				break;
+			}
+		}
+
+		if (!isDuplicate) {
+			uniqueUstensils[uniqueIndex] = allUstensils[i];
+			uniqueIndex++;
+		}
+	}
 
 	return uniqueUstensils;
 }
