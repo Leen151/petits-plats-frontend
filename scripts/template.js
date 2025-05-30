@@ -45,7 +45,7 @@ function recipeCard(recipe) {
 	return wrapper
 }
 
-function createTagSelect(type, title, filterValues = []) {
+function createSelectTag(type, title, filterValues = []) {
 	// Conteneur
 	const tagContainer = document.createElement('div');
 	tagContainer.classList.add('tag', `tag-${type}`);
@@ -76,4 +76,4 @@ function createTagSelect(type, title, filterValues = []) {
 }
 
 
-export { recipeCard, createTagSelect }
+export { recipeCard, createSelectTag }
