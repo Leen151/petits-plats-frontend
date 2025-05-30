@@ -4,12 +4,15 @@ function searchRecipes(recipes, keyword = "", selectedIngredients = [], selected
 	const lowerKeyword = keyword.toLowerCase().trim();
 	let filteredByKeyword = recipes;
 
-	if (lowerKeyword.length > 0) {
+	if (lowerKeyword.length > 2) {
 		filteredByKeyword = filteredByKeyword.filter(recipe =>
 			recipe.name.toLowerCase().includes(lowerKeyword) ||
 			recipe.description.toLowerCase().includes(lowerKeyword) ||
 			recipe.ingredients.some(ing => ing.ingredient.toLowerCase().includes(lowerKeyword))
 		);
+	}
+	else {
+		filteredByKeyword = recipes;
 	}
 
 	// Étape 2 : filtrage par tags    
