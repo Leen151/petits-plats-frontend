@@ -44,7 +44,7 @@ function recipeCard(recipe) {
 	return wrapper;
 }
 
-function createSelectTag(type, title, filterValues = []) {
+function createTagSelect(type, title, filterValues = []) {
 	// Conteneur
 	const tagContainer = document.createElement("div");
 	tagContainer.classList.add("tag", `tag-${type}`);
@@ -75,4 +75,18 @@ function createSelectTag(type, title, filterValues = []) {
 }
 
 
-export { recipeCard, createSelectTag };
+function createSelectedTag(value, type) {
+	const tagSelected = document.querySelector(".tag-selected ul");
+
+	const content = `
+        <li class="${type}-tag">
+            ${value}
+            <i class="fa-solid fa-xmark cross-tag"></i>
+        </li>
+    `;
+
+	tagSelected.innerHTML += content;
+}
+
+
+export { recipeCard, createTagSelect, createSelectedTag };

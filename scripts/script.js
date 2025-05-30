@@ -1,4 +1,4 @@
-import { recipeCard, createSelectTag } from "./template.js";
+import { recipeCard, createTagSelect, createSelectedTag } from "./template.js";
 import { getData, getIngredients, getAppliance, getUstensils } from "./Api.js";
 import { searchRecipes } from "./search.js";
 
@@ -27,7 +27,7 @@ async function main() {
 	];
 
 	tags.forEach(tag => {
-		const tagComponent = createSelectTag(tag.type, tag.titre, tag.values);
+		const tagComponent = createTagSelect(tag.type, tag.titre, tag.values);
 		tagSelectContainer.appendChild(tagComponent);
 	});
 
@@ -36,6 +36,7 @@ async function main() {
 	const listAppliances = document.querySelector(".list-appliances");
 	const listUstensils = document.querySelector(".list-ustensils");
 	const chevronIcons = document.querySelectorAll(".icone-chevron");
+
 
 	//primo affichage des recettes
 	displayRecipes(recipesData);
@@ -71,16 +72,16 @@ async function main() {
 		if (keywordInput.length > 2) {
 			const filteredRecipes = searchRecipes(recipesData, keywordInput, selectedIngredients, selectedAppliances, selectedUstensils);
 			displayRecipes(filteredRecipes);
-			await updateFilters(filteredRecipes);
+			updateFilters(filteredRecipes);
 		}
 		//si on ne met pas le else, quand on efface le champs de saisie, la liste de recette ne se réactualise pas (pour moins de 3 caractères)
 		else {
 			displayRecipes(recipesData);
-			await updateFilters(recipesData);
+			updateFilters(recipesData);
 		}
 	});
 
-	// simule la soumission de l'input de recherche
+	// simule la soumission de l'input de recherche (expérience utilisateur)
 	formSearch.addEventListener("submit", (e) => {
 		e.preventDefault();
 		inputSearch.blur();
@@ -217,24 +218,6 @@ async function main() {
 			.replace(/'/g, "&#039;");
 	}
 
-	//créer un tag-selected
-	function createSelectedTag(value, type) {
-		const tagSelected = document.querySelector(".tag-selected ul");
-		const li = document.createElement("li");
-
-		// ajout du texte du tag
-		li.textContent = value;
-
-		// icône de croix
-		const cross = document.createElement("i");
-		cross.classList.add("fa-solid", "fa-xmark", "cross-tag");
-		li.appendChild(cross);
-
-		// ajout de la classe correspondant au type de tag (utile pour la suppression)
-		li.classList.add(`${type}-tag`);
-		tagSelected.appendChild(li);
-	}
-
 	//créer la galerie de recettes
 	function displayRecipes(recipes) {
 		//Efface la galerie de recette prééxistante
@@ -268,9 +251,6 @@ async function main() {
 
 	//créer une liste d'un filtre
 	function displayFilters(items, domElement, filterType) {
-		console.log(items);
-		console.log(domElement);
-		console.log(filterType);
 		//on réinitialise
 		domElement.innerHTML = "";
 
@@ -307,17 +287,17 @@ async function main() {
 		});
 	}
 
-	function updateFilters(recipes) {
+	function updateFilters(newRecipesList) {
 		// Mettre à jour les ingrédients
-		const filteredIngredients = getIngredients(recipes);
+		const filteredIngredients = getIngredients(newRecipesList);
 		displayFilters(filteredIngredients, listIngredients, "ingredient");
 
 		// Mettre à jour les appareils
-		const filteredAppliances = getAppliance(recipes);
+		const filteredAppliances = getAppliance(newRecipesList);
 		displayFilters(filteredAppliances, listAppliances, "appliance");
 
 		// Mettre à jour les ustensiles
-		const filteredUstensils = getUstensils(recipes);
+		const filteredUstensils = getUstensils(newRecipesList);
 		displayFilters(filteredUstensils, listUstensils, "ustensil");
 	}
 
