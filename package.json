@@ -1,0 +1,14 @@
+{
+  "name": "petitsplats_frontend",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "http-server",
+    "lint": "eslint ./",
+    "lint:fix": "eslint ./ --fix"
+  },
+  "author": "Leen151",
+  "devDependencies": {
+    "eslint": "^8.57.1"
+  }
+}

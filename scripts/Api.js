@@ -2,7 +2,7 @@ async function getData() {
 	return await fetch("../data/recipes.json")
 		.then(res => res.json())
 		.then(res => res.recipes)
-		.catch(err => console.log("an error occurs", err))
+		.catch(err => console.log("an error occurs", err));
 }
 
 function getIngredients(recipe) {
@@ -42,7 +42,7 @@ function getUstensils(recipe) {
 	return uniqueUstensils;
 }
 
-export { getData, getIngredients, getAppliance, getUstensils }
+export { getData, getIngredients, getAppliance, getUstensils };
 
 
 

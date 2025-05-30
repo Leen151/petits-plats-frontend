@@ -1,5 +1,4 @@
 function recipeCard(recipe) {
-
 	// balise article (conteneur)
 	const wrapper = document.createElement("article");
 	wrapper.classList.add("recipe");
@@ -10,8 +9,8 @@ function recipeCard(recipe) {
 	ingredientsList.classList.add("ingredients-list");
 
 	recipe.ingredients.forEach(ingredient => {
-		const quantityText = ingredient.quantity ? `${ingredient.quantity}` : '';
-		const unitText = ingredient.unit ? (ingredient.unit === 'grammes' ? 'gr' : ingredient.unit) : ""
+		const quantityText = ingredient.quantity ? `${ingredient.quantity}` : "";
+		const unitText = ingredient.unit ? (ingredient.unit === "grammes" ? "gr" : ingredient.unit) : "";
 
 		const listItem = document.createElement("li");
 		listItem.innerHTML = `
@@ -41,14 +40,14 @@ function recipeCard(recipe) {
 		</div>
 	`;
 
-	wrapper.innerHTML = content
-	return wrapper
+	wrapper.innerHTML = content;
+	return wrapper;
 }
 
 function createSelectTag(type, title, filterValues = []) {
 	// Conteneur
-	const tagContainer = document.createElement('div');
-	tagContainer.classList.add('tag', `tag-${type}`);
+	const tagContainer = document.createElement("div");
+	tagContainer.classList.add("tag", `tag-${type}`);
 
 	// Création du titre et de la structure
 	//(le .join transforme un tableau de <li> en string pour avoir 1 seule chaine html)
@@ -66,7 +65,7 @@ function createSelectTag(type, title, filterValues = []) {
 				<ul class="list list-${type} list-filters">
 						${filterValues.map(value => `
 							<li class="filter ${type}-tag">${value}</li>
-						`).join('')}
+						`).join("")}
 				</ul>
 		</div>        
   `;
@@ -76,4 +75,4 @@ function createSelectTag(type, title, filterValues = []) {
 }
 
 
-export { recipeCard, createSelectTag }
+export { recipeCard, createSelectTag };
