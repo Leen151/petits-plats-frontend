@@ -233,7 +233,7 @@ async function main() {
 			const noResultMessage = document.createElement("div");
 			noResultMessage.classList.add("no-result-message");
 			noResultMessage.innerHTML = `
-            	<p>Aucune recette ne contient « ${inputSearch.value} » </p>
+            	<p>Aucune recette ne contient « ${escapeHtml(inputSearch.value)} » </p>
             	<p>Vous pouvez chercher « tarte aux pommes », « poisson », etc.</p>
         	`;
 			sectionGallery.appendChild(noResultMessage);
