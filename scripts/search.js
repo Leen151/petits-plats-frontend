@@ -11,9 +11,7 @@ function searchRecipes(recipes, keyword = "", selectedIngredients = [], selected
 			recipe.ingredients.some(ing => ing.ingredient.toLowerCase().includes(lowerKeyword))
 		);
 	}
-	else {
-		filteredByKeyword = recipes;
-	}
+
 
 	// Étape 2 : filtrage par tags    
 	// Si aucun tag selectionné → on retourne le résultat du filtrage par mot clé
